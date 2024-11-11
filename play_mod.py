@@ -4,6 +4,7 @@ import title_mod
 import item_mod
 from grass import Grass
 from boy import Boy
+from bird import Bird
 import game_world
 
 # 클래스 단위로 분리
@@ -45,6 +46,9 @@ def init():
 
     boy = Boy()
     game_world.add_object(boy,1)
+
+    bird =Bird(1000,500)
+    game_world.add_object(bird,1)
 
     # grass = Grass(400, 30)
     # game_world.add_object(grass, 1)

@@ -196,7 +196,7 @@ class Auto_Run:
     def draw(boy):
         size =boy.size
         #boy.image.clip_draw(boy.frame * 100, boy.action * 100, 100,100, boy.x, boy.y)
-        boy.image.clip_composite_draw( boy.frame * 100, boy.action * 100, 100, 100,
+        boy.image.clip_composite_draw( int(boy.frame) * 100, boy.action * 100, 100, 100,
             0,  # 90도 회전
             '',  # 좌우상하 반전 X
             boy.x , boy.y +size//5, size,size)
