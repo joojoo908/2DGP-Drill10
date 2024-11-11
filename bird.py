@@ -7,7 +7,7 @@ RUN_SPEED_PPS =(RUN_SPEED_MPS*PIXEL_PER_METER)
 
 Time_PER_ACTION =0.5
 ACTION_PER_TIME =1.0/Time_PER_ACTION
-FRAME_PER_ACTION=13
+FRAME_PER_ACTION=14
 import random
 from ball import *
 #from state_machin import StateMachine
@@ -59,9 +59,9 @@ class Fly:
         #boy.frame = (boy.frame+1)%8
         boy.frame = (boy.frame + FRAME_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 14
         boy.x += boy.dir * RUN_SPEED_PPS * game_framework.frame_time
-        if boy.x>1600:
+        if boy.x>1600-50:
             boy.dir=-1
-        elif boy.x < 0:
+        elif boy.x < 0+50:
             boy.dir = 1
     @staticmethod
     def draw(boy):
