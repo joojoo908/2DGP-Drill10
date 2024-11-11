@@ -8,17 +8,19 @@ RUN_SPEED_PPS =(RUN_SPEED_MPS*PIXEL_PER_METER)
 Time_PER_ACTION =0.5
 ACTION_PER_TIME =1.0/Time_PER_ACTION
 FRAME_PER_ACTION=13
-
+import random
 from ball import *
 #from state_machin import StateMachine
 from state_machin import *
 import game_framework
 
 class Bird:
-    def __init__(self,x,y):
+    def __init__(self):
         self.item =None
-        self.x, self.y = x,y
-        self.frame = 0
+        self.x, self.y = random.randint(0, 800), random.randint(300, 500)
+        self.frame = random.randint(0, 12)
+        #self.x, self.y = x,y
+        #self.frame = 0
         self.dir = 1
 
         self.action = 1
@@ -44,8 +46,9 @@ class Bird:
 class Fly:
     @staticmethod
     def enter(boy,e):
+        pass
         #boy.dir=0
-        boy.frame=0
+        #boy.frame=0
 
     @staticmethod
     def exit(boy,e):

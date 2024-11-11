@@ -47,8 +47,9 @@ def init():
     boy = Boy()
     game_world.add_object(boy,1)
 
-    bird =Bird(1000,500)
-    game_world.add_object(bird,1)
+    team = [Bird() for i in range(10)]
+    for a in team:
+        game_world.add_object(a,1)
 
     # grass = Grass(400, 30)
     # game_world.add_object(grass, 1)
