@@ -5,6 +5,10 @@ RUN_SPEED_MPM = (RUN_SPEED_KMPH*1000.0/60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM/60.0)
 RUN_SPEED_PPS =(RUN_SPEED_MPS*PIXEL_PER_METER)
 
+Time_PER_ACTION =0.5
+ACTION_PER_TIME =1.0/Time_PER_ACTION
+FRAME_PER_ACTION=8
+
 import game_world
 from ball import *
 #from state_machin import StateMachine
@@ -81,12 +85,13 @@ class Idle:
         pass
     @staticmethod
     def do(boy):
-        boy.frame = (boy.frame+1)%8
+        #boy.frame = (boy.frame+1)%8
+        boy.frame = (boy.frame + FRAME_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
         if get_time() - boy.wait_time>2:
             boy.state_machine.add_event(('TIME_OUT',0))
     @staticmethod
     def draw(boy):
-        boy.image.clip_draw(boy.frame * 100, boy.action * 100, 100, 100, boy.x, boy.y)
+        boy.image.clip_draw(int(boy.frame) * 100, boy.action * 100, 100, 100, boy.x, boy.y)
 
 class Sleep:
     @staticmethod
@@ -100,19 +105,20 @@ class Sleep:
         pass
     @staticmethod
     def do(boy):
-        boy.frame = (boy.frame+1)%8
+        #boy.frame = (boy.frame+1)%8
+        boy.frame = (boy.frame + FRAME_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
     @staticmethod
     def draw(boy):
         if boy.action ==3:
             boy.image.clip_composite_draw(
-                boy.frame *100, 300, 100, 100,
+                int(boy.frame) *100, 300, 100, 100,
                 3.141592/2, # 90도 회전
                 '', # 좌우상하 반전 X
                 boy.x - 25, boy.y - 25, 100, 100
             )
         else:
             boy.image.clip_composite_draw(
-                boy.frame * 100, 200, 100, 100,
+                int(boy.frame) * 100, 200, 100, 100,
                 3.141592/2*3,  # 90도 회전
                 '',  # 좌우상하 반전 X
                 boy.x + 25, boy.y - 25, 100, 100)
@@ -135,9 +141,10 @@ class Run:
 
     @staticmethod
     def do(boy):
-        boy.frame = (boy.frame + 1) % 8
+        boy.frame = (boy.frame+FRAME_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time)%8
+        #boy.frame = (boy.frame + 1) % 8
         if boy.dir==1:
-            if boy.x<800:
+            if boy.x<800*2:
                 boy.x+=boy.dir* RUN_SPEED_PPS * game_framework.frame_time
 
         else:
@@ -147,7 +154,7 @@ class Run:
 
     @staticmethod
     def draw(boy):
-        boy.image.clip_draw(boy.frame * 100, boy.action * 100, 100, 100, boy.x, boy.y)
+        boy.image.clip_draw( int(boy.frame) * 100, boy.action * 100, 100, 100, boy.x, boy.y)
 
 class Auto_Run:
     @staticmethod
@@ -171,7 +178,7 @@ class Auto_Run:
     def do(boy):
         boy.frame = (boy.frame + 1) % 8
         boy.x += boy.dir * 15
-        if boy.x>800:
+        if boy.x>800*2:
             boy.dir,boy.action=-1,0
         elif boy.x<0:
             boy.dir, boy.action = 1, 1
