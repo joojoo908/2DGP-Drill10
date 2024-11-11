@@ -39,14 +39,16 @@ def init():
     running = True
     world = []
 
-    grass = Grass(400,80)
+    # grass = Grass(400,80)
+    # game_world.add_object(grass,0)
+    grass = Grass(400,30)
     game_world.add_object(grass,0)
 
     boy = Boy()
     game_world.add_object(boy,1)
 
-    grass = Grass(400, 30)
-    game_world.add_object(grass, 1)
+    # grass = Grass(400, 30)
+    # game_world.add_object(grass, 1)
 
 def finish():
     game_world.clear()
